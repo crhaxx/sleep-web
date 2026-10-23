@@ -99,8 +99,65 @@ SleepWise also provides age-based guidance and personalized suggestions for heal
 | Tailwind CSS | Styling |
 | Motion | Animations |
 | Lucide React | Icons |
-| LocalStorage | Local preferences |
+| LocalStorage | Local preferences (anonymous use) |
+| Supabase | Auth, Postgres database, and cloud sync |
 | Vercel | Deployment |
+
+## 🗄️ Backend: Supabase
+
+SleepWise uses **Supabase only** for authentication and persisted user data. Anonymous use stays fully local; cloud features require an optional account.
+
+### Why Supabase
+
+- Auth + Postgres + Row Level Security in one platform
+- Fits the privacy-first model (RLS so users only access their own rows)
+- Works well with Next.js on Vercel
+- Optional accounts and cloud sync without a custom backend
+
+### Auth
+
+- Email magic link and/or OAuth (e.g. Google) via Supabase Auth
+- No account required for the calculator
+- On sign-in, local preferences can be merged into the user’s cloud profile
+- Account deletion removes related application data
+
+### Database schema (Postgres)
+
+```text
+profiles                 — public profile linked to auth.users (1:1)
+user_preferences         — locale, theme, age, sleep duration, latency, default mode
+questionnaire_responses  — lifestyle answers (columns + flexible JSONB)
+sleep_schedules          — weekday / weekend / custom plans
+sleep_calculations       — optional history for Sleep Insights
+```
+
+| Table | Role |
+|---|---|
+| `profiles` | `id` = `auth.users.id`, display name, timestamps |
+| `user_preferences` | 1:1 settings synced from LocalStorage when signed in |
+| `questionnaire_responses` | Questionnaire answers per user |
+| `sleep_schedules` | Weekly planner rows (`wake_time`, `bedtime`, `days_of_week`, …) |
+| `sleep_calculations` | Stored calculation history for insights (optional) |
+
+All application tables use **Row Level Security**: `auth.uid() = user_id` (or `id` on `profiles`). Cascading deletes keep data tied to the auth user.
+
+### Data flow
+
+```text
+Without account  → LocalStorage only
+With account     → Supabase Auth + sync to Postgres
+Sign out         → Local cache may remain; cloud data unchanged
+Delete account   → Auth user + related rows removed (CASCADE / policies)
+```
+
+### Environment variables
+
+```bash
+NEXT_PUBLIC_SUPABASE_URL=your_project_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
+```
+
+Never expose the service role key in the browser. Server-only operations use it only when required.
 
 ## 📁 Project Structure
 
@@ -115,9 +172,12 @@ sleepwise/
 │   ├── hooks/
 │   ├── lib/
 │   │   ├── sleep/
-│   │   └── i18n/
+│   │   ├── i18n/
+│   │   └── supabase/
 │   ├── data/
 │   └── types/
+├── supabase/
+│   └── migrations/
 ├── package.json
 ├── README.md
 └── tsconfig.json
@@ -139,21 +199,22 @@ Users can switch languages directly in the application.
 SleepWise is designed with privacy in mind.
 
 - No registration required for basic calculations.
-- No personal data needs to be sent to a server.
-- User preferences can be saved locally.
-- Users can delete their saved preferences.
+- Without an account, preferences stay in LocalStorage and are not sent to Supabase.
+- Optional accounts sync preferences and schedules to Supabase under RLS.
+- Users can delete local preferences and, when signed in, their account and cloud data.
 - No third-party tracking is required.
 
 ## 📦 Deployment
 
-SleepWise is designed for deployment on Vercel.
+SleepWise is designed for deployment on Vercel, with Supabase as the backend.
 
 1. Push your project to GitHub.
-2. Import your repository into Vercel.
-3. Configure the project settings if necessary.
-4. Deploy the application.
+2. Create a Supabase project and apply migrations.
+3. Import your repository into Vercel.
+4. Set `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
+5. Deploy the application.
 
-Visit [Vercel](https://vercel.com) for more information.
+Visit [Vercel](https://vercel.com) and [Supabase](https://supabase.com) for more information.
 
 ## 🗺️ Roadmap
 
@@ -164,8 +225,8 @@ Visit [Vercel](https://vercel.com) for more information.
 - [ ] Weekly sleep planner
 - [ ] Czech and English localization
 - [ ] Light and dark themes
-- [ ] Optional user accounts
-- [ ] Cloud synchronization
+- [ ] Optional user accounts (Supabase Auth)
+- [ ] Cloud synchronization (Supabase Postgres + RLS)
 - [ ] Additional sleep insights
 
 ## 🤝 Contributing
