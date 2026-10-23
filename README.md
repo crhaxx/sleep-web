@@ -1,193 +1,287 @@
-# 🌙 SleepWise
+---
 
-### Wake up feeling better.
+## 🚀 SleepWise 2.0 – Social Features
 
-**SleepWise** is a free, modern, and personalized sleep calculator designed to help you find a suitable bedtime and wake-up schedule based on your age, lifestyle, and sleep preferences.
+SleepWise is evolving beyond a traditional sleep calculator into a personalized sleep wellness platform with optional user accounts, cloud synchronization, and social features.
 
-Sleep smarter. Wake up refreshed. Build better habits.
+### 👤 Guest Mode vs. Registered Users
+
+SleepWise offers two different experiences.
+
+| Feature | Guest | Registered User |
+|---|:---:|:---:|
+| Sleep Calculator | ✅ | ✅ |
+| Smart Questionnaire | ✅ | ✅ |
+| Personalized Recommendations | ✅ | ✅ |
+| Sleep Timeline | ✅ | ✅ |
+| Save Sleep Plans | ❌ | ✅ |
+| Sleep History | ❌ | ✅ |
+| Sleep Analytics | ❌ | ✅ |
+| Sleep Streaks | ❌ | ✅ |
+| Sleep Friends | ❌ | ✅ |
+| Social Challenges | ❌ | ✅ |
+| Private Groups | ❌ | ✅ |
+| Cloud Synchronization | ❌ | ✅ |
+
+**Guest Mode:** Users can calculate their sleep schedule without registration. Calculation data is temporary and is not saved.
+
+**Registered Mode:** Users can securely save their sleep plans, track progress, connect with friends, and synchronize data between devices.
+
+## 👫 Sleep Friends
+
+Connect with friends and build better sleep habits together.
+
+Features include:
+
+- Search for friends by username.
+- Send and accept friend requests.
+- Manage your friends list.
+- Share selected sleep goals.
+- Participate in shared challenges.
+- Control what friends can see.
+- Block or remove users.
+
+Personal sleep information remains private unless explicitly shared.
+
+## 🔗 Sleep Plan Sharing
+
+Share your sleep schedule with others.
+
+Supported sharing methods:
+
+- Download a sleep plan as an image.
+- Share using the device's native sharing features.
+- Copy a formatted sleep plan.
+- Create secure sharing links when logged in.
+- Configure sharing permissions.
+- Revoke previously shared links.
+
+Shared plans may contain bedtime, wake-up time, planned sleep duration, and optional profile information.
+
+Private sleep history and questionnaire responses are never shared automatically.
+
+## 🔥 Sleep Streaks
+
+Track consistency and build healthier sleep routines.
+
+Features:
+
+- Current sleep streak
+- Longest sleep streak
+- Weekly consistency
+- Monthly consistency
+- Achievement badges
+- Personal sleep goals
+
+Streaks are based on user-reported sleep data and are intended to encourage healthy habits rather than sleep deprivation.
+
+## 🏆 Social Sleep Challenges
+
+Complete sleep-related challenges with friends.
+
+Examples:
+
+- 7-Day Sleep Consistency Challenge
+- 14-Day Sleep Journal Challenge
+- Healthy Bedtime Routine Challenge
+- Morning Energy Tracking Challenge
+- Weekend Sleep Consistency Challenge
+
+Users can create challenges, invite friends, track progress, and earn achievements.
+
+Challenge participation is optional.
+
+## 👥 Private Sleep Groups
+
+Create private groups with friends.
+
+Group features include:
+
+- Create and customize groups.
+- Invite members.
+- Manage group membership.
+- Assign group roles.
+- Create group challenges.
+- Track shared challenge progress.
+- Leave or delete groups.
+
+Group roles:
+
+- Owner
+- Admin
+- Member
+
+Private sleep records are not automatically accessible to group members.
+
+## 📊 Advanced Sleep Analytics
+
+Registered users can access detailed sleep statistics.
+
+Available insights include:
+
+- Daily sleep duration
+- Weekly sleep averages
+- Monthly sleep trends
+- Bedtime consistency
+- Wake-up consistency
+- Morning energy tracking
+- Subjective sleep quality
+- Planned versus reported sleep
+- Sleep streak history
+
+Analytics are based on saved or self-reported data.
+
+SleepWise does not claim to measure sleep stages or diagnose medical conditions.
+
+## 🔑 Authentication and Cloud Storage
+
+SleepWise uses Supabase for authentication and cloud-backed functionality.
+
+Authentication features:
+
+- Email registration
+- Secure login
+- Email verification
+- Password recovery
+- User profiles
+- Persistent sessions
+- Account deletion
+
+Registered user data is stored in Supabase PostgreSQL.
+
+Database access is protected using Row Level Security (RLS).
+
+### Supabase Configuration
+
+Create a project at [Supabase](https://supabase.com).
+
+Configure the required environment variables:
+
+```env
+VITE_SUPABASE_URL=your_supabase_project_url
+VITE_SUPABASE_PUBLISHABLE_KEY=your_supabase_publishable_key
+```
+
+Apply the database migrations included in the repository.
+
+Configure the authentication redirect URLs for your deployed website.
+
+Never expose Supabase service-role keys or other privileged credentials in frontend code.
+
+## 🌐 GitHub Pages Deployment
+
+The static version of SleepWise is designed to be hosted using GitHub Pages.
+
+The deployment architecture uses:
+
+- React
+- Vite
+- TypeScript
+- Tailwind CSS
+- Supabase
+- GitHub Actions
+- GitHub Pages
+
+GitHub Pages serves the frontend, while Supabase provides authentication and database services.
+
+### Deployment Steps
+
+1. Create a GitHub repository.
+2. Push the SleepWise source code.
+3. Configure the GitHub Actions deployment workflow.
+4. Set the correct Vite base path.
+5. Configure Supabase public environment variables.
+6. Open the repository's **Settings → Pages**.
+7. Select **GitHub Actions** as the deployment source.
+8. Run the deployment workflow.
+
+The website will be available at:
+
+```text
+https://YOUR_USERNAME.github.io/sleepwise/
+```
+
+The exact URL depends on the repository name and GitHub account.
+
+For GitHub Pages compatibility, use a routing strategy that supports direct navigation and page refreshes.
+
+**Important:** GitHub Pages does not execute server-side application code. Any privileged backend operations must run through properly secured external services such as Supabase Edge Functions.
+
+## 🛡️ Additional Privacy and Security
+
+SleepWise follows a privacy-first design.
+
+Security features include:
+
+- Private sleep records by default.
+- Optional user accounts.
+- Row Level Security.
+- Secure authentication.
+- Explicit sharing permissions.
+- Revocable sharing links.
+- Private groups.
+- User blocking.
+- Personal data export.
+- Account deletion.
+
+Guest calculations are not stored persistently.
+
+Registered users control which information is saved or shared.
+
+## 🧪 Testing
+
+SleepWise includes or plans automated tests for:
+
+- Sleep calculations
+- Age-based recommendations
+- Midnight transitions
+- Authentication
+- Saved sleep plans
+- Friend requests
+- Sleep streaks
+- Challenges
+- Group permissions
+- Database access restrictions
+
+Recommended commands:
+
+```bash
+npm run test
+npm run build
+```
+
+Additional test commands depend on the scripts configured in `package.json`.
+
+## 🗺️ SleepWise 2.0 Roadmap
+
+- [ ] Guest and authenticated modes
+- [ ] Supabase authentication
+- [ ] Cloud-saved sleep plans
+- [ ] Personal sleep dashboard
+- [ ] Sleep journal
+- [ ] Advanced sleep analytics
+- [ ] Sleep streak tracking
+- [ ] Sleep Friends
+- [ ] Secure sleep plan sharing
+- [ ] Social sleep challenges
+- [ ] Private sleep groups
+- [ ] User privacy controls
+- [ ] Account deletion and data export
+- [ ] GitHub Pages deployment
+- [ ] Automated security testing
+
+Features should be marked complete only after they are implemented and verified.
 
 ---
 
-## ✨ Features
+### 🌙 The Future of SleepWise
 
-- 🧠 **Personalized Sleep Calculator** – Calculate your bedtime or wake-up time based on your preferences.
-- 🎂 **Age-Based Recommendations** – Compare your sleep duration with recommended ranges for your age group.
-- 📝 **Smart Questionnaire** – Get personalized suggestions based on your lifestyle, caffeine consumption, exercise, and sleep habits.
-- ⏰ **Two Calculation Modes** – Calculate when to go to bed or when to wake up.
-- 🌙 **Sleep Timeline** – Visualize your planned sleep schedule.
-- 📅 **Weekly Sleep Planner** – Create different schedules for weekdays and weekends.
-- 📊 **Sleep Insights** – Understand your sleep habits and discover ways to improve them.
-- 🌍 **Multilingual Support** – Available in English and Czech.
-- 📱 **Responsive Design** – Optimized for mobile, tablet, and desktop.
-- 🔒 **Privacy First** – No account required. Preferences can be stored locally in your browser.
-- 🎨 **Modern Interface** – Elegant dark theme, subtle animations, and intuitive navigation.
+Our mission is simple:
 
-## 🚀 Getting Started
+**Make healthy sleep habits easier to understand, track, and maintain.**
 
-### Prerequisites
-
-Make sure you have installed:
-
-- Node.js (current LTS version)
-- npm
-- Git
-
-### Installation
-
-Clone the repository:
-
-```bash
-git clone https://github.com/YOUR_USERNAME/sleepwise.git
-```
-
-Navigate into the project:
-
-```bash
-cd sleepwise
-```
-
-Install dependencies:
-
-```bash
-npm install
-```
-
-Start the development server:
-
-```bash
-npm run dev
-```
-
-Open **http://localhost:3000** in your browser.
-
-## 🧮 How It Works
-
-SleepWise calculates a suggested bedtime using three main inputs:
-
-1. Your desired wake-up time.
-2. Your preferred sleep duration.
-3. Your estimated time to fall asleep.
-
-### Bedtime Formula
-
-```text
-Bedtime = Wake-up Time - Sleep Duration - Sleep Latency
-```
-
-### Example
-
-| Parameter | Value |
-|---|---|
-| Age | 18 years |
-| Wake-up time | 07:00 |
-| Desired sleep | 8 hours 30 minutes |
-| Sleep latency | 15 minutes |
-| Suggested bedtime | 22:15 |
-| Estimated sleep onset | 22:30 |
-
-SleepWise also provides age-based guidance and personalized suggestions for healthier sleep habits.
-
-**Note:** Sleep cycles vary between individuals. SleepWise does not predict exact REM or deep sleep stages.
-
-## 🛠️ Tech Stack
-
-| Technology | Purpose |
-|---|---|
-| Next.js | Web framework |
-| React | User interface |
-| TypeScript | Type-safe development |
-| Tailwind CSS | Styling |
-| Motion | Animations |
-| Lucide React | Icons |
-| LocalStorage | Local preferences |
-| Vercel | Deployment |
-
-## 📁 Project Structure
-
-```text
-sleepwise/
-├── public/
-├── src/
-│   ├── app/
-│   ├── components/
-│   │   ├── calculator/
-│   │   └── dashboard/
-│   ├── hooks/
-│   ├── lib/
-│   │   ├── sleep/
-│   │   └── i18n/
-│   ├── data/
-│   └── types/
-├── package.json
-├── README.md
-└── tsconfig.json
-```
-
-*The structure may evolve during development.*
-
-## 🌐 Languages
-
-SleepWise is designed to support:
-
-- 🇬🇧 English
-- 🇨🇿 Czech
-
-Users can switch languages directly in the application.
-
-## 🔐 Privacy
-
-SleepWise is designed with privacy in mind.
-
-- No registration required for basic calculations.
-- No personal data needs to be sent to a server.
-- User preferences can be saved locally.
-- Users can delete their saved preferences.
-- No third-party tracking is required.
-
-## 📦 Deployment
-
-SleepWise is designed for deployment on Vercel.
-
-1. Push your project to GitHub.
-2. Import your repository into Vercel.
-3. Configure the project settings if necessary.
-4. Deploy the application.
-
-Visit [Vercel](https://vercel.com) for more information.
-
-## 🗺️ Roadmap
-
-- [ ] Core sleep calculator
-- [ ] Personalized questionnaire
-- [ ] Age-based recommendations
-- [ ] Sleep results dashboard
-- [ ] Weekly sleep planner
-- [ ] Czech and English localization
-- [ ] Light and dark themes
-- [ ] Optional user accounts
-- [ ] Cloud synchronization
-- [ ] Additional sleep insights
-
-## 🤝 Contributing
-
-Contributions, suggestions, and bug reports are welcome.
-
-If you would like to contribute, open an issue or submit a pull request.
-
-## ⚕️ Medical Disclaimer
-
-SleepWise is intended for general wellness and educational purposes only.
-
-It does not provide medical diagnoses, detect sleep disorders, or replace professional medical advice.
-
-Sleep recommendations are estimates and may not be suitable for everyone.
-
-## 📄 License
-
-A license has not yet been selected. Please contact the project owner before reusing or distributing the source code.
-
----
+Whether you're calculating your bedtime for the first time or building better routines with friends, SleepWise helps you make informed decisions about your sleep.
 
 **SleepWise** 🌙
 
-*Better nights. Better mornings.*
+*Sleep smarter. Wake up better. Together.*
