@@ -1,287 +1,90 @@
----
+# SleepWise
 
-## 🚀 SleepWise 2.0 – Social Features
+SleepWise is a privacy-first, bilingual sleep calculator and wellness journal built with **HTML5, CSS3, vanilla JavaScript ES modules, Supabase, and GitHub Pages**. It is served directly as static files: there is no frontend framework, build step, server, service-role key, reminder system, or notification system.
 
-SleepWise is evolving beyond a traditional sleep calculator into a personalized sleep wellness platform with optional user accounts, cloud synchronization, and social features.
+## Features
 
-### 👤 Guest Mode vs. Registered Users
+- Free guest questionnaire, bedtime/wake-up calculator, age-range guidance, illustrative timeline, and deterministic routine tips. Guest answers are held in JavaScript memory only and disappear on refresh.
+- English and Czech interface controls, browser-language default, dark and light themes, responsive layouts, keyboard-friendly native form controls, reduced-motion support.
+- Supabase email/password registration, verification, login/logout, password reset, saved plans, weekly schedules, self-reported journal, analytics and consistency streaks.
+- Friend requests, block controls, private groups/invitations, challenge participation, explicitly created expiring/revocable sleep-plan links, profile privacy, and user data export.
+- PostgreSQL migrations with RLS policies. Private sleep records are owner-only; challenges and groups use database-authorized functions and policies.
 
-SleepWise offers two different experiences.
+Social interfaces and database schemas are included; actual use of authenticated/cloud functionality requires a configured Supabase project and applying the migrations. Do not claim a configured production backend until those steps are done.
 
-| Feature | Guest | Registered User |
-|---|:---:|:---:|
-| Sleep Calculator | ✅ | ✅ |
-| Smart Questionnaire | ✅ | ✅ |
-| Personalized Recommendations | ✅ | ✅ |
-| Sleep Timeline | ✅ | ✅ |
-| Save Sleep Plans | ❌ | ✅ |
-| Sleep History | ❌ | ✅ |
-| Sleep Analytics | ❌ | ✅ |
-| Sleep Streaks | ❌ | ✅ |
-| Sleep Friends | ❌ | ✅ |
-| Social Challenges | ❌ | ✅ |
-| Private Groups | ❌ | ✅ |
-| Cloud Synchronization | ❌ | ✅ |
+## Run locally
 
-**Guest Mode:** Users can calculate their sleep schedule without registration. Calculation data is temporary and is not saved.
+Serve the repository root using any static HTTP server. ES modules require HTTP(S), not `file://`.
 
-**Registered Mode:** Users can securely save their sleep plans, track progress, connect with friends, and synchronize data between devices.
-
-## 👫 Sleep Friends
-
-Connect with friends and build better sleep habits together.
-
-Features include:
-
-- Search for friends by username.
-- Send and accept friend requests.
-- Manage your friends list.
-- Share selected sleep goals.
-- Participate in shared challenges.
-- Control what friends can see.
-- Block or remove users.
-
-Personal sleep information remains private unless explicitly shared.
-
-## 🔗 Sleep Plan Sharing
-
-Share your sleep schedule with others.
-
-Supported sharing methods:
-
-- Download a sleep plan as an image.
-- Share using the device's native sharing features.
-- Copy a formatted sleep plan.
-- Create secure sharing links when logged in.
-- Configure sharing permissions.
-- Revoke previously shared links.
-
-Shared plans may contain bedtime, wake-up time, planned sleep duration, and optional profile information.
-
-Private sleep history and questionnaire responses are never shared automatically.
-
-## 🔥 Sleep Streaks
-
-Track consistency and build healthier sleep routines.
-
-Features:
-
-- Current sleep streak
-- Longest sleep streak
-- Weekly consistency
-- Monthly consistency
-- Achievement badges
-- Personal sleep goals
-
-Streaks are based on user-reported sleep data and are intended to encourage healthy habits rather than sleep deprivation.
-
-## 🏆 Social Sleep Challenges
-
-Complete sleep-related challenges with friends.
-
-Examples:
-
-- 7-Day Sleep Consistency Challenge
-- 14-Day Sleep Journal Challenge
-- Healthy Bedtime Routine Challenge
-- Morning Energy Tracking Challenge
-- Weekend Sleep Consistency Challenge
-
-Users can create challenges, invite friends, track progress, and earn achievements.
-
-Challenge participation is optional.
-
-## 👥 Private Sleep Groups
-
-Create private groups with friends.
-
-Group features include:
-
-- Create and customize groups.
-- Invite members.
-- Manage group membership.
-- Assign group roles.
-- Create group challenges.
-- Track shared challenge progress.
-- Leave or delete groups.
-
-Group roles:
-
-- Owner
-- Admin
-- Member
-
-Private sleep records are not automatically accessible to group members.
-
-## 📊 Advanced Sleep Analytics
-
-Registered users can access detailed sleep statistics.
-
-Available insights include:
-
-- Daily sleep duration
-- Weekly sleep averages
-- Monthly sleep trends
-- Bedtime consistency
-- Wake-up consistency
-- Morning energy tracking
-- Subjective sleep quality
-- Planned versus reported sleep
-- Sleep streak history
-
-Analytics are based on saved or self-reported data.
-
-SleepWise does not claim to measure sleep stages or diagnose medical conditions.
-
-## 🔑 Authentication and Cloud Storage
-
-SleepWise uses Supabase for authentication and cloud-backed functionality.
-
-Authentication features:
-
-- Email registration
-- Secure login
-- Email verification
-- Password recovery
-- User profiles
-- Persistent sessions
-- Account deletion
-
-Registered user data is stored in Supabase PostgreSQL.
-
-Database access is protected using Row Level Security (RLS).
-
-### Supabase Configuration
-
-Create a project at [Supabase](https://supabase.com).
-
-Configure the required environment variables:
-
-```env
-VITE_SUPABASE_URL=your_supabase_project_url
-VITE_SUPABASE_PUBLISHABLE_KEY=your_supabase_publishable_key
+```sh
+python3 -m http.server 4173
 ```
 
-Apply the database migrations included in the repository.
+Open <http://localhost:4173>. Optional syntax and calculation tests run using Node's built-in test runner:
 
-Configure the authentication redirect URLs for your deployed website.
-
-Never expose Supabase service-role keys or other privileged credentials in frontend code.
-
-## 🌐 GitHub Pages Deployment
-
-The static version of SleepWise is designed to be hosted using GitHub Pages.
-
-The deployment architecture uses:
-
-- React
-- Vite
-- TypeScript
-- Tailwind CSS
-- Supabase
-- GitHub Actions
-- GitHub Pages
-
-GitHub Pages serves the frontend, while Supabase provides authentication and database services.
-
-### Deployment Steps
-
-1. Create a GitHub repository.
-2. Push the SleepWise source code.
-3. Configure the GitHub Actions deployment workflow.
-4. Set the correct Vite base path.
-5. Configure Supabase public environment variables.
-6. Open the repository's **Settings → Pages**.
-7. Select **GitHub Actions** as the deployment source.
-8. Run the deployment workflow.
-
-The website will be available at:
-
-```text
-https://YOUR_USERNAME.github.io/sleepwise/
+```sh
+node --test tests/*.test.js
 ```
 
-The exact URL depends on the repository name and GitHub account.
+There is no npm install, compile step, or running Node server requirement. A static file server is only needed to view the app locally.
 
-For GitHub Pages compatibility, use a routing strategy that supports direct navigation and page refreshes.
+## Supabase setup
 
-**Important:** GitHub Pages does not execute server-side application code. Any privileged backend operations must run through properly secured external services such as Supabase Edge Functions.
+1. Create a Supabase project.
+2. Run `supabase/migrations/202610230001_initial.sql` and then `202610230002_account_and_social_hardening.sql` in the Supabase SQL editor or with Supabase CLI migration tooling.
+3. Configure Auth > URL Configuration. Set the Site URL to `https://USERNAME.github.io/REPOSITORY/` and allow that URL plus `https://USERNAME.github.io/REPOSITORY/#/login` as appropriate redirects. For local testing allow `http://localhost:4173/`.
+4. In repository Settings > Secrets and variables > Actions > Variables, add `SUPABASE_URL` and `SUPABASE_PUBLISHABLE_KEY` (the public anon/publishable client key).
+5. The deploy workflow writes only those public values into a generated `js/config.js`. Never add `service_role`, database passwords, or other privileged secrets to Actions variables, static files, or browser code.
 
-## 🛡️ Additional Privacy and Security
+If the public settings are absent, the guest calculator still works; account pages explain that Supabase is not configured.
 
-SleepWise follows a privacy-first design.
+## GitHub Pages deployment
 
-Security features include:
+The workflow `.github/workflows/deploy.yml` publishes root static assets to GitHub Pages on pushes to `main` and manual workflow runs. In repository Settings > Pages, set the source to **GitHub Actions**. The application uses hash-based routing (`#/plans`, `#/analytics`, etc.) so refreshes and direct navigation work on a project page at `https://USERNAME.github.io/REPOSITORY/`. Repository name and username are supplied by GitHub Pages; no account/repository URL is hardcoded.
 
-- Private sleep records by default.
-- Optional user accounts.
-- Row Level Security.
-- Secure authentication.
-- Explicit sharing permissions.
-- Revocable sharing links.
-- Private groups.
-- User blocking.
-- Personal data export.
-- Account deletion.
+The deployment creates a static artifact directly; no Vite or build system is required.
 
-Guest calculations are not stored persistently.
+## Database and privacy
 
-Registered users control which information is saved or shared.
+The SQL schema includes profiles, sleep plans/entries, friendships, blocks, groups/memberships/invitations, challenges/participants, and shared plans. RLS is the authorization boundary. The browser uses the public key and never uses service-role credentials. Share links store SHA-256 token hashes in the database and expire/revoke through database state.
 
-## 🧪 Testing
+RLS and SQL functions should be reviewed in a staging Supabase project before real user data is collected. This project has not been independently security-audited or legally assessed. Review GDPR and other privacy requirements with qualified counsel; no legal-compliance claim is made. Account deletion requires successful user authentication and the database deletion RPC. Users should export data before deletion.
 
-SleepWise includes or plans automated tests for:
+## Sleep information
 
-- Sleep calculations
-- Age-based recommendations
-- Midnight transitions
-- Authentication
-- Saved sleep plans
-- Friend requests
-- Sleep streaks
-- Challenges
-- Group permissions
-- Database access restrictions
+Sleep duration ranges are general educational recommendations, not individual prescriptions. Age alone cannot determine an exact bedtime. Needs vary. SleepWise does not diagnose, treat, or measure sleep; journal records are user-reported. Seek professional advice for persistent sleep concerns.
 
-Recommended commands:
+## Architecture
 
-```bash
-npm run test
-npm run build
+```mermaid
+graph TD
+  Browser[Static HTML CSS JS] --> Router[Hash router]
+  Router --> Guest[Guest calculator in memory]
+  Router --> Auth[Supabase Auth client]
+  Auth --> DB[Supabase PostgreSQL]
+  DB --> RLS[Row Level Security]
+  Pages[GitHub Actions Pages deploy] --> Static[GitHub Pages static assets]
 ```
 
-Additional test commands depend on the scripts configured in `package.json`.
+```mermaid
+graph LR
+  User --> Guest[Use calculator without account]
+  User --> Signup[Register and verify]
+  Signup --> Plans[Private plans and journal]
+  Plans --> Analytics[Analytics and streaks]
+  Signup --> Social[Friends, groups and challenges]
+  Social --> Sharing[Explicit expiring plan link]
+```
 
-## 🗺️ SleepWise 2.0 Roadmap
-
-- [ ] Guest and authenticated modes
-- [ ] Supabase authentication
-- [ ] Cloud-saved sleep plans
-- [ ] Personal sleep dashboard
-- [ ] Sleep journal
-- [ ] Advanced sleep analytics
-- [ ] Sleep streak tracking
-- [ ] Sleep Friends
-- [ ] Secure sleep plan sharing
-- [ ] Social sleep challenges
-- [ ] Private sleep groups
-- [ ] User privacy controls
-- [ ] Account deletion and data export
-- [ ] GitHub Pages deployment
-- [ ] Automated security testing
-
-Features should be marked complete only after they are implemented and verified.
-
----
-
-### 🌙 The Future of SleepWise
-
-Our mission is simple:
-
-**Make healthy sleep habits easier to understand, track, and maintain.**
-
-Whether you're calculating your bedtime for the first time or building better routines with friends, SleepWise helps you make informed decisions about your sleep.
-
-**SleepWise** 🌙
-
-*Sleep smarter. Wake up better. Together.*
+```mermaid
+erDiagram
+  AUTH_USERS ||--|| PROFILES : owns
+  AUTH_USERS ||--o{ SLEEP_PLANS : saves
+  AUTH_USERS ||--o{ SLEEP_ENTRIES : records
+  AUTH_USERS ||--o{ FRIENDSHIPS : requests
+  AUTH_USERS ||--o{ USER_BLOCKS : blocks
+  GROUPS ||--o{ GROUP_MEMBERS : contains
+  GROUPS ||--o{ GROUP_INVITATIONS : invites
+  CHALLENGES ||--o{ CHALLENGE_PARTICIPANTS : tracks
+  SLEEP_PLANS ||--o{ SHARED_PLANS : shares
+```

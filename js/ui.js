@@ -1,0 +1,4 @@
+export function toast(message){const region=document.querySelector("#toast-region"),node=document.createElement("div");node.className="toast enter";node.textContent=message;region.append(node);setTimeout(()=>node.remove(),4200)}
+export function escapeHtml(value){return String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]))}
+export function field({name,label,type="text",value="",required=true,attrs=""}){return `<div class="field"><label for="${name}">${label}</label><input id="${name}" name="${name}" type="${type}" value="${escapeHtml(value)}" ${required?"required":""} ${attrs}></div>`}
+export function showError(container,error){const box=container.querySelector("[data-message]");if(box){box.className="error";box.textContent=error.message||String(error)}}

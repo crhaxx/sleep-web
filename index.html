@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0C1425">
+  <meta name="description" content="A free, private-first sleep calculator and wellness journal. Wake up feeling better with SleepWise.">
+  <title>SleepWise — Wake up feeling better</title>
+  <link rel="icon" href="./assets/icons/moon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/responsive.css">
+  <link rel="stylesheet" href="./css/animations.css">
+  <script src="./js/config.js"></script>
+  <script type="module" src="./js/app.js"></script>
+</head>
+<body>
+  <div id="app" class="shell">
+    <header class="container nav">
+      <a class="brand" href="#/"><span class="brand-mark">☾</span><span>SleepWise</span></a>
+      <nav id="navigation" class="nav-links" aria-label="Main navigation"></nav>
+      <div class="controls">
+        <button id="language-toggle" class="control" type="button" aria-label="Change language">EN</button>
+        <button id="theme-toggle" class="control icon-button" type="button" aria-label="Toggle theme">☼</button>
+      </div>
+    </header>
+    <main id="main" class="container app-main" tabindex="-1"></main>
+    <footer class="container footer"><span>© <span id="year"></span> SleepWise · <span data-i18n="tagline">Wake up feeling better.</span></span><span><span data-i18n="medicalDisclaimer">SleepWise offers general information, not medical advice.</span></footer>
+  </div>
+  <div id="toast-region" class="toast-region" aria-live="polite" aria-atomic="true"></div>
+</body>
+</html>
